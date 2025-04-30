@@ -1,15 +1,19 @@
 import {
   bio,
-  skills,
+  projects,
+  achievements,
   education,
   experience,
-  trekking,
   footer,
 } from "./user-data/data.js";
 
 import { URLs } from "./user-data/urls.js";
 
 const { medium, gitConnected, gitRepo } = URLs;
+
+const rootStyles = getComputedStyle(document.documentElement);
+const gradientColor1 = rootStyles.getPropertyValue("--gradient-color1").trim();
+const gradientColor2 = rootStyles.getPropertyValue("--gradient-color2").trim();
 
 async function fetchBlogsFromMedium(url) {
   try {
@@ -98,129 +102,31 @@ function populateSkills(items, id) {
   });
 }
 
-function populateTrekking(items) {
-  const skillsTag = document.getElementById('trekking');
-  items.forEach((item) => {
-    const h3 = getElement("li", null);
-    h3.innerHTML = item;
-
-    const divProgressWrap = getElement("div", "progress-wrap");
-    divProgressWrap.append(h3);
-
-    const divAnimateBox = getElement("div", "col-md-12 animate-box");
-    divAnimateBox.append(divProgressWrap);
-
-    skillsTag.append(divAnimateBox);
-  });
-}
-
-function populateBlogs(items, id) {
-  const projectdesign = document.getElementById(id);
-  const count = 3; // Number of blogs to display
-
-  for (let i = 0; i < count; i++) {
-      // Create a wrapper for the blog card
-      const blogCard = document.createElement("div");
-      blogCard.className = "blog-card";
-      blogCard.style = `
-          display: flex;
-          flex-direction: column;
-          border-radius: 12px;
-          padding: 16px;
-          font-size: 14px;
-          background: linear-gradient(135deg, rgb(255, 221, 153), rgb(249, 191, 63));
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-          min-height: 150px;
-          cursor: pointer;
-      `;
-
-      // Wrap the card content in an anchor tag
-      const blogLink = document.createElement("a");
-      blogLink.href = items[i].link;
-      blogLink.target = "_blank";
-      blogLink.style = "text-decoration: none; color: black; display: block;";
-
-      blogCard.appendChild(blogLink);
-
-      // Blog Title
-      const blogTitle = document.createElement("h4");
-      blogTitle.className = "blog-heading";
-      blogTitle.innerHTML = items[i].title;
-      blogTitle.style = "margin: 0 0 8px; font-size: 18px; font-weight: bold;";
-      blogLink.appendChild(blogTitle);
-
-      // Publish Date
-      const pubDateEle = document.createElement("p");
-      pubDateEle.className = "publish-date";
-      pubDateEle.innerHTML = getBlogDate(items[i].pubDate);
-      pubDateEle.style = "margin: 0 0 12px; font-size: 12px; color: #555;";
-      blogLink.appendChild(pubDateEle);
-
-      // Blog Description
-      const blogDescription = document.createElement("p");
-      blogDescription.className = "blog-description";
-      const html = items[i].content;
-      const [, doc] = /<p>(.*?)<\/p>/g.exec(html) || [];
-      blogDescription.innerHTML = doc;
-      blogDescription.style = "margin: 0 0 12px; font-size: 12px; color: #000;";
-      blogLink.appendChild(blogDescription);
-
-      // Categories (Tags)
-      const categoriesDiv = document.createElement("div");
-      categoriesDiv.style = "display: flex; gap: 8px; margin-top: 12px;";
-
-      for (const category of items[i].categories) {
-          const badge = document.createElement("span");
-          badge.className = "badge";
-          badge.innerHTML = category;
-          badge.style = `
-              font-size: 12px;
-              padding: 4px 8px;
-              background-color: #007acc;
-              color: white;
-              border-radius: 4px;
-          `;
-          categoriesDiv.appendChild(badge);
-      }
-
-      blogLink.appendChild(categoriesDiv);
-
-      // Append the blog card to the container
-      projectdesign.appendChild(blogCard);
-  }
-}
-
 function populateRepo(items, id) {
   const projectdesign = document.getElementById(id);
-  const count = 4; // Adjust this count based on the number of repos you want to display
-
-  // Set up a wrapper div to hold repo cards in rows of 2
-  const rowWrapper = document.createElement("div");
-  rowWrapper.style =
-    "display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;";
-  projectdesign.appendChild(rowWrapper);
+  const count = items.length; // Adjust this count based on the number of repos you want to display
 
   for (let i = 0; i < count; i++) {
     // Create elements for each repo card
     const repoCard = document.createElement("div");
     repoCard.className = "repo-card";
     repoCard.style = `
-          flex: 1 0 48%;  /* Two cards in one row */
           display: flex;
           flex-direction: column;
           justify-content: space-between;
           border-radius: 12px;
           padding: 16px;
           font-size: 14px;
-          background: linear-gradient(135deg, #ffdd99, #f9bf3f);
+          background: linear-gradient(135deg, ${gradientColor1}, ${gradientColor2});
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-          transition: transform 0.2s ease-in-out;
+          min-height: 150px;
           cursor: pointer;
+          transition: transform 0.2s ease-in-out;
       `;
 
     // Make the card clickable by wrapping the content inside an anchor tag
     const repoLink = document.createElement("a");
-    repoLink.href = `https://github.com/${items[i].author}/${items[i].name}`;
+    repoLink.href = items[i].link;
     repoLink.target = "_blank";
     repoLink.style =
       "text-decoration: none; color: black; display: block; height: 100%;";
@@ -230,14 +136,21 @@ function populateRepo(items, id) {
     // Repository name
     const repoName = document.createElement("h4");
     repoName.className = "repo-heading";
-    repoName.innerHTML = items[i].name;
+    repoName.innerHTML = items[i].title;
     repoName.style = "margin: 0; font-size: 18px; font-weight: bold;";
     repoLink.appendChild(repoName);
+
+    // Subtitle
+    const subtitleEle = document.createElement("p");
+    subtitleEle.className = "repo-subtitle";
+    subtitleEle.innerHTML = items[i].subtitle;
+    subtitleEle.style = "margin: 0 0 12px; font-size: 12px; color: #555;";
+    repoLink.appendChild(subtitleEle);
 
     // Repository description
     const repoDescription = document.createElement("p");
     repoDescription.className = "repo-description";
-    repoDescription.innerHTML = items[i].description;
+    repoDescription.innerHTML = items[i].details;
     repoDescription.style = "margin-top: 8px; font-size: 12px; color: #555;";
     repoLink.appendChild(repoDescription);
 
@@ -253,36 +166,138 @@ function populateRepo(items, id) {
       `;
 
     // Language
-    const languageDiv = document.createElement("div");
-    languageDiv.style = "display: flex; align-items: center; gap: 4px;";
-    languageDiv.innerHTML = `
+    if (items[i].language) {
+      const languageDiv = document.createElement("div");
+      languageDiv.style = "display: flex; align-items: center; gap: 4px;";
+      languageDiv.innerHTML = `
           <span style="width: 8px; height: 8px; background-color: #666; border-radius: 50%; display: inline-block;"></span>
           ${items[i].language}
       `;
-    statsRow.appendChild(languageDiv);
+      statsRow.appendChild(languageDiv);
+    }
 
     // Stars
-    const starsDiv = document.createElement("div");
-    starsDiv.style = "display: flex; align-items: center; gap: 4px;";
-    starsDiv.innerHTML = `
+    if (items[i].stars) {
+      const starsDiv = document.createElement("div");
+      starsDiv.style = "display: flex; align-items: center; gap: 4px;";
+      starsDiv.innerHTML = `
           <img src="https://img.icons8.com/ios-filled/16/666666/star--v1.png" alt="Stars">
           ${items[i].stars}
       `;
-    statsRow.appendChild(starsDiv);
+      statsRow.appendChild(starsDiv);
+    }
 
     // Forks
-    const forksDiv = document.createElement("div");
-    forksDiv.style = "display: flex; align-items: center; gap: 4px;";
-    forksDiv.innerHTML = `
+    if (items[i].forks) {
+      const forksDiv = document.createElement("div");
+      forksDiv.style = "display: flex; align-items: center; gap: 4px;";
+      forksDiv.innerHTML = `
           <img src="https://img.icons8.com/ios-filled/16/666666/code-fork.png" alt="Forks">
           ${items[i].forks}
       `;
-    statsRow.appendChild(forksDiv);
+      statsRow.appendChild(forksDiv);
+    }
 
     repoLink.appendChild(statsRow);
 
-    // Add the repo card to the row wrapper
-    rowWrapper.appendChild(repoCard);
+    // Categories (Tags)
+    const categoriesDiv = document.createElement("div");
+    categoriesDiv.style = "display: flex; gap: 8px; margin-top: 12px;";
+
+    for (const category of items[i].tags) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.innerHTML = category;
+      badge.style = `
+              font-size: 12px;
+              padding: 4px 8px;
+              background-color: #007acc;
+              color: white;
+              border-radius: 4px;
+          `;
+      categoriesDiv.appendChild(badge);
+    }
+
+    repoLink.appendChild(categoriesDiv);
+
+    // Add the repo card to the parent element
+    projectdesign.appendChild(repoCard);
+  }
+}
+
+function populateAchievements(items, id) {
+  const projectdesign = document.getElementById(id);
+  const count = 3; // Number of achievements to display
+
+  for (let i = 0; i < items.length; i++) {
+    // Create a wrapper for the achievements card
+    const achievementCard = document.createElement("div");
+    achievementCard.className = "achievement-card";
+    achievementCard.style = `
+          display: flex;
+          flex-direction: column;
+          border-radius: 12px;
+          padding: 16px;
+          font-size: 14px;
+          background: linear-gradient(135deg, ${gradientColor1}, ${gradientColor2});
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          min-height: 150px;
+          cursor: pointer;
+          transition: transform 0.2s ease-in-out;
+      `;
+
+    // Wrap the card content in an anchor tag
+    const achievementLink = document.createElement("a");
+    if (items[i].link && items[i].link !== "") {
+      achievementLink.href = items[i].link;
+      achievementLink.target = "_blank";
+    }
+    achievementLink.style = "text-decoration: none; color: black; display: block;";
+    achievementCard.appendChild(achievementLink);
+
+    // Achievement Title
+    const achievementTitle = document.createElement("h4");
+    achievementTitle.className = "achievement-heading";
+    achievementTitle.innerHTML = items[i].title;
+    achievementTitle.style = "margin: 0 0 8px; font-size: 18px; font-weight: bold;";
+    achievementLink.appendChild(achievementTitle);
+
+    // Subtitle
+    const subtitleEle = document.createElement("p");
+    subtitleEle.className = "achievement-subtitle";
+    subtitleEle.innerHTML = items[i].subtitle;
+    subtitleEle.style = "margin: 0 0 12px; font-size: 12px; color: #555;";
+    achievementLink.appendChild(subtitleEle);
+
+    // Achievement Description
+    const achievementDescription = document.createElement("p");
+    achievementDescription.className = "achievement-description";
+    achievementDescription.innerHTML = items[i].details;
+    achievementDescription.style = "margin: 0 0 12px; font-size: 12px; color: #000;";
+    achievementLink.appendChild(achievementDescription);
+
+    // Categories (Tags)
+    const categoriesDiv = document.createElement("div");
+    categoriesDiv.style = "display: flex; gap: 8px; margin-top: 12px;";
+
+    for (const category of items[i].tags) {
+      const badge = document.createElement("span");
+      badge.className = "badge";
+      badge.innerHTML = category;
+      badge.style = `
+              font-size: 12px;
+              padding: 4px 8px;
+              background-color: #007acc;
+              color: white;
+              border-radius: 4px;
+          `;
+      categoriesDiv.appendChild(badge);
+    }
+
+    achievementLink.appendChild(categoriesDiv);
+
+    // Append the achievement card to the container
+    projectdesign.appendChild(achievementCard);
   }
 }
 
@@ -444,15 +459,16 @@ function getBlogDate(publishDate) {
 }
 
 populateBio(bio, "bio");
+populateAchievements(achievements, "achievements");
+populateRepo(projects, "projects");
 
-populateSkills(skills, "skills");
+// populateSkills(skills, "skills");
 
-fetchBlogsFromMedium(medium);
-fetchReposFromGit(gitRepo);
-fetchGitConnectedData(gitConnected);
+// fetchBlogsFromMedium(medium);
+// fetchReposFromGit(gitRepo);
+// fetchGitConnectedData(gitConnected);
 
 populateExp_Edu(experience, "experience");
-populateTrekking(trekking);
 populateExp_Edu(education, "education");
 
 populateLinks(footer, "footer");
