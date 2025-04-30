@@ -1,3 +1,3 @@
 # Portfolio Website.
 
-https://timschwirtlich.github.io/
+https://tschwirt.github.io/timschwirtlich
