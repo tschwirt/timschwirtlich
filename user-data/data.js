@@ -2,12 +2,30 @@ export const bio = [
   "Welcome to my world!",
   "Instead of opening my portfolio with a standard description of static roles & titles, I'd like to begin by sharing who I am and what drives me.",
   "Rather than focusing on the past, I am looking toward the future by continuously thinking about how technology can be leveraged to have a <strong>positive impact on people's lives and well-being</strong>.",
-  "What defines me is my passion and dedication to projects that are close to my heart. I am a strong believer in the <strong>power of extended reality in combination with artificial intelligence</strong> to transform and enhance patient health & well-being.",
+  "What defines me is my passion and dedication to projects that are close to my heart. I am a strong believer in the <strong>power of graph networks in combination with artificial intelligence and extended reality</strong> to transform and enhance patient health & well-being.",
   "I invite you to explore my portfolio page to gain a deeper understanding of the context for my vision.",
   "~ Tim",
 ];
 
 export const projects = [
+  {
+    title:
+      "EL-GraPhi: EHR-LLM-integrated graph network for public health informatics",
+    subtitle: "Dissertation research, 2025",
+    details:
+      "A novel graph network approach integrating structured and unstructured data multimodal data into unified, processable representation. Using a GPU-accelerated computing stack, large language models (LLMs) powered autonomous agents extract and reason over the graph network to enable public health intelligence. A first prototype is available that works with structured electronic health records (EHR) and open-source LLMs to answer public health questions in natural language.",
+    link: "https://github.com/tschwirt/EL-GraPhi",
+    language: "Python",
+    stars: "tschwirt/EL-GraPhi",
+    forks: null,
+    tags: [
+      "Graph Neural Networks",
+      "Large Language Models",
+      "Electronic Health Records",
+      "Autonomous AI Agents",
+      "Neo4j",
+    ],
+  },
   {
     title:
       "Real QArt: The new way of social networking with AI Art & Augmented Reality glasses",
@@ -85,6 +103,22 @@ export const projects = [
 export const achievements = [
   {
     title:
+      "Ethics and Artificial Intelligence Research Grant 2025-2026 ($2,500.00)",
+    subtitle:
+      "Ethics at Eye Level: Exploring the Bioethical Implications of AI-Powered Smart Glasses for Health & Well-being Self-Management",
+    details:
+      "This individual research grant was awarded by the Northwestern Institute for Artificial Intelligence in Medicine (I.AIM) and Center for Bioethics and Medical Humanities (CBMH). Within the award period, I will explore the bioethical implications of AI-powered smart glasses for health & well-being self-management. The research will involve a comprehensive literature review, collection of patient perspectives, and the development & validation of a trustworthy architecture for extended reality glasses in patient health.",
+    link: "https://www.bioethics.northwestern.edu/research/funding.html",
+    tags: [
+      "Extended Reality",
+      "Smart Glasses",
+      "Artificial Intelligence",
+      "Patient Health & Well-being",
+      "Bioethical Implications",
+    ],
+  },
+  {
+    title:
       "Schwirtlich, et al. - Synergy of Artificial Intelligence and Extended Reality in Patient-focused Health and Well-Being Applications – A Systematic Review",
     subtitle: "Submitted March 2025 [under revision]",
     details:
@@ -103,7 +137,7 @@ export const achievements = [
     subtitle:
       "American Journal of Neuroradiology (AJNR), April 2025 [published]",
     details:
-      "In the publication, we present a self-supervised learning approach to detect the black hole sign (BHS) on CT images of patients with intracerebral hemorrhage (ICH). Our method utilizes a large dataset of CT images to train a model that can reliably identify the BHS, potentially aiding in clinical decision-making and improving patient outcomes. The manuscript is currently in-press.",
+      "In the publication, we present a self-supervised learning approach to detect the black hole sign (BHS) on CT images of patients with intracerebral hemorrhage (ICH). Our method utilizes a large dataset of CT images to train a model that can reliably identify the BHS, potentially aiding in clinical decision-making and improving patient outcomes.",
     link: "https://doi.org/10.3174/ajnr.A8826",
     tags: [
       "Self-Supervised Learning",
@@ -139,6 +173,33 @@ export const achievements = [
       "Algorithm Interface",
       "Personalized Healthcare",
       "Patent",
+    ],
+  },
+  {
+    title:
+      "Wang, Schwirtlich, et al. - Clinical Applications and Measurement Properties of the Digitized Archimedes Spiral Drawing Test: A Scoping Review",
+    subtitle: "Movement Disorders Clinical Practice, August 2025 [published]",
+    details:
+      "In the publication, we present a scoping review of the clinical applications and measurement properties of the digitized Archimedes spiral drawing test. This work synthesizes evidence on its utility as a clinical outcome measurement instrument in adult populations, highlighting strengths, limitations, and future research directions.",
+    link: "https://doi.org/10.1002/mdc3.70278",
+    tags: [
+      "Digitized Archimedes Spiral",
+      "Clinical Outcome Measurement",
+      "Movement Disorders",
+    ],
+  },
+  {
+    title:
+      "Jiang, Schwirtlich, et al. - Economic Evaluations of Worksite Health Centers: A Systematic Review",
+    subtitle:
+      "Journal of Occupational and Environmental Medicine (JOEM), April 2025 [published]",
+    details:
+      "In this systematic review, we investigate the cost-effectiveness or return on investment (ROI) from worksite health centers (WHCs) in the US. WHCs may provide economic savings for large employers. Future studies should consider clinical effectiveness and service quality and investigate the specific mechanisms driving employer cost savings.",
+    link: "https://doi.org/10.1097/JOM.0000000000003300",
+    tags: [
+      "Worksite Health Centers",
+      "Economic Evaluation",
+      "Cost-Effectiveness",
     ],
   },
 ];
